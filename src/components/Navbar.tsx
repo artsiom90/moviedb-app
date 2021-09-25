@@ -1,8 +1,13 @@
 import { Layout, Menu, Row } from "antd"
 import { FC } from "react"
+import { useDispatch } from "react-redux"
+import { useTypedSelector } from "../hooks/useTypedSelector"
+import { AuthActionCreators } from "../redux/reducers/auth/actioncreators"
 
 const Navbar: FC = () => {
-    const isAuth = true
+    const dispatch = useDispatch()
+    const { isAuth } = useTypedSelector(state => state.auth)
+
 
     return (
         <Layout.Header>
@@ -13,13 +18,13 @@ const Navbar: FC = () => {
                         mode='horizontal'
                         selectable={false}
                     >
-                        <Menu.Item>Logout</Menu.Item>
+                        <Menu.Item onClick={() => dispatch(AuthActionCreators.setIsAuth(false))}>Logout</Menu.Item>
                     </Menu>
                     : <Menu
                         theme='dark'
                         selectable={false}
                     >
-                        <Menu.Item>Login</Menu.Item>
+                        <div>MovieDB</div>
                     </Menu>}
             </Row>
         </Layout.Header>
