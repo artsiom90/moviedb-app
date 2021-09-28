@@ -2,7 +2,7 @@ import { Layout, Menu, Row } from "antd"
 import { FC } from "react"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "../hooks/useTypedSelector"
-import { AuthActionCreators } from "../redux/reducers/auth/actioncreators"
+import { AuthActionCreators } from "../redux/reducers/auth/actionCreators"
 
 const Navbar: FC = () => {
     const dispatch = useDispatch()

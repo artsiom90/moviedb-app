@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input } from "antd"
 import { FC } from "react"
 import { useDispatch } from "react-redux"
-import { AuthActionCreators } from "../redux/reducers/auth/actioncreators"
+import { AuthActionCreators } from "../redux/reducers/auth/actionCreators"
 
 const LoginForm: FC = () => {
     const dispatch = useDispatch()

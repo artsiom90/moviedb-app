@@ -11,6 +11,7 @@ const AppRouter = () => {
                 {privateRoutes.map(route => {
                     return (
                         <Route
+                            key={route.path}
                             path={route.path}
                             component={route.component}
                             exact={route.exact}
@@ -23,6 +24,7 @@ const AppRouter = () => {
                 {publicRoutes.map(route => {
                     return (
                         <Route
+                            key={route.path}
                             path={route.path}
                             component={route.component}
                             exact={route.exact}
