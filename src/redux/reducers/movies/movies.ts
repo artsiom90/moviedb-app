@@ -1,7 +1,7 @@
-import { Movie, MoviesActionEnum, MoviesActionType, MoviesState } from './types'
+import { MoviesActionEnum, MoviesActionType, MoviesData, MoviesState } from './types'
 
 const initialState = {
-    movies: [] as Movie[],
+    movies: {} as MoviesData,
 }
 
 export const moviesReducer = (state = initialState, action: MoviesActionType): MoviesState => {

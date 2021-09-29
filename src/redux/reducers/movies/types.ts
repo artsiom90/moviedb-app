@@ -18,13 +18,13 @@ export interface MoviesData {
     total_results: number
 }
 export interface MoviesState {
-    movies: Movie[]
+    movies: MoviesData
 }
 export enum MoviesActionEnum {
     SET_MOVIES = 'SET_MOVIES',
 }
 export interface SetMoviesAction {
     type: MoviesActionEnum.SET_MOVIES
-    payload: Movie[]
+    payload: MoviesData
 }
 export type MoviesActionType = SetMoviesAction
