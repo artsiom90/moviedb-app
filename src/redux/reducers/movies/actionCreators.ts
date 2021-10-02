@@ -5,11 +5,13 @@ import { MoviesActionEnum, MoviesData, SetMoviesAction } from './types'
 
 export const MoviesActionCreators = {
     setMovies: (payload: MoviesData): SetMoviesAction => ({ type: MoviesActionEnum.SET_MOVIES, payload }),
-    getMovies: (search: string = '', page: number = 1) => async (dispatch: AppDispatch) => {
+    getMovies: (page: number = 1, search: string = '') => async (dispatch: AppDispatch) => {
         try {
             dispatch(LoadingActionCreators.setIsLoading(true))
-            const response = await MovieDBApiService.fetchMovies(search, page)
+            const response = await MovieDBApiService.fetchMovies(page, search)
             dispatch(MoviesActionCreators.setMovies(response.data))
+            console.log(response.data)
+
             dispatch(LoadingActionCreators.setIsLoading(false))
         } catch (error) {
             dispatch(LoadingActionCreators.setIsLoading(false))

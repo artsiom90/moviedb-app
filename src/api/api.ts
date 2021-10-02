@@ -5,7 +5,7 @@ export const API_KEY: string | undefined = 'd2b478aa3c60bdcc5ab5272c8aeef917'
 export const IMG_URL: string = 'http://image.tmdb.org/t/p/w500'
 
 export class MovieDBApiService {
-    static async fetchMovies(search: string, page: number) {
+    static async fetchMovies(page: number, search: string) {
         if (!search) {
             const response = await axios.get(`${API_URL}movie/popular?api_key=${API_KEY}&page=${page}`)
             return response
