@@ -1,10 +1,11 @@
 import { MovieDBApiService } from '../../../api/api'
 import { LoadingActionCreators } from '../loading/actionCreators'
 import { AppDispatch } from './../../store/types'
-import { MoviesActionEnum, MoviesData, SetMoviesAction } from './types'
+import { MoviesActionEnum, MoviesData, SetMoviesAction, SetSearchAction } from './types'
 
 export const MoviesActionCreators = {
     setMovies: (payload: MoviesData): SetMoviesAction => ({ type: MoviesActionEnum.SET_MOVIES, payload }),
+    setSearch: (payload: string): SetSearchAction => ({ type: MoviesActionEnum.SET_SEARCH, payload }),
     getMovies: (page: number = 1, search: string = '') => async (dispatch: AppDispatch) => {
         try {
             dispatch(LoadingActionCreators.setIsLoading(true))
