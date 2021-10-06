@@ -2,7 +2,8 @@ import axios from "axios"
 
 export const API_URL: string = 'https://api.themoviedb.org/3/'
 export const API_KEY: string | undefined = 'd2b478aa3c60bdcc5ab5272c8aeef917'
-export const IMG_URL: string = 'http://image.tmdb.org/t/p/w500'
+export const IMG_POSTER_URL: string = 'http://image.tmdb.org/t/p/w500'
+export const IMG_BACKDROP_URL: string = 'http://image.tmdb.org/t/p/w780'
 
 export class MovieDBApiService {
     static async fetchMovies(page: number, search: string) {
@@ -13,5 +14,9 @@ export class MovieDBApiService {
             const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
             return response
         }
+    }
+    static async fetchMovie(id: string) {
+        const response = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`)
+        return response
     }
 }

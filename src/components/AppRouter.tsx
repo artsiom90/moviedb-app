@@ -31,7 +31,7 @@ const AppRouter = () => {
                         />
                     )
                 })}
-                <Redirect to={RouteNames.LOGIN} />
+                <Redirect to={RouteNames.LOGIN_PAGE} />
             </Switch>
     )
 }

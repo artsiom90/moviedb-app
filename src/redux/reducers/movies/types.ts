@@ -19,15 +19,21 @@ export interface MoviesData {
 }
 export interface MoviesState {
     movies: MoviesData
+    movieInfo: Movie
     search: string
 }
 export enum MoviesActionEnum {
     SET_MOVIES = 'SET_MOVIES',
+    SET_MOVIE = 'SET_MOVIE',
     SET_SEARCH = 'SET_SEARCH',
 }
 export interface SetMoviesAction {
     type: MoviesActionEnum.SET_MOVIES
     payload: MoviesData
+}
+export interface SetMovieAction {
+    type: MoviesActionEnum.SET_MOVIE
+    payload: Movie
 }
 export interface SetSearchAction {
     type: MoviesActionEnum.SET_SEARCH
@@ -35,4 +41,5 @@ export interface SetSearchAction {
 }
 export type MoviesActionType =
     SetMoviesAction |
+    SetMovieAction |
     SetSearchAction
