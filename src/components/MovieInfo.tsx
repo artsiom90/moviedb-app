@@ -1,4 +1,4 @@
-import { Card, Layout, Row } from "antd"
+import { Card, Col, Layout, Row } from "antd"
 import Meta from "antd/lib/card/Meta"
 import { FC, useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -29,14 +29,34 @@ const MovieInfo: FC = () => {
         <Layout>
             {isLoading
                 ? <Loading />
-                : <Card>
-                    <Row justify='center' style={{ paddingBottom: 20 }}>
+                : <>
+                    <div style={{ textAlign: 'center', margin: '15px 0 15px 0' }}>
                         <Meta title={movieInfo.title} />
+                        <Meta description={movieInfo.overview} />
+                    </div>
+                    <Row justify='space-around' style={{ paddingBottom: 20 }}>
+                        <Col>
+                            <img src={`${IMG_BACKDROP_URL}${movieInfo.backdrop_path}`} alt="img" />
+                        </Col>
+                        <Card style={{ width: 400 }}>
+                            <p>
+                                <Meta description={`Release date: ${movieInfo.release_date}`} />
+                            </p>
+                            <p>
+                                <Meta description={`Runtime: ${movieInfo.runtime} minutes`} />
+                            </p>
+                            <p>
+                                <Meta description={`Budget: ${movieInfo.budget}$`} />
+                            </p>
+                            <p>
+                                <Meta description={`Revenue: ${movieInfo.revenue}$`} />
+                            </p>
+                            <p>
+                                <Meta description={`Vote average: ${movieInfo.vote_average}`} />
+                            </p>
+                        </Card>
                     </Row>
-                    <Row justify='start'>
-                        <img src={`${IMG_BACKDROP_URL}${movieInfo.backdrop_path}`} alt="img" />
-                    </Row>
-                </Card>}
+                </>}
         </Layout>
     )
 }

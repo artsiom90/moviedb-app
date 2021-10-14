@@ -1,5 +1,4 @@
 import { Layout } from 'antd'
-import { Footer } from 'antd/lib/layout/layout'
 import { FC } from 'react'
 import './App.css'
 import AppRouter from './components/AppRouter'
@@ -12,7 +11,6 @@ const App: FC = () => {
       <Layout.Content>
         <AppRouter />
       </Layout.Content>
-      <Footer/>
     </Layout>
   )
 }

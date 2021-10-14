@@ -2,11 +2,10 @@ export interface Movie {
     backdrop_path: string
     id: number
     overview: string
-    popularity: number
+    release_date: string
     poster_path: string
     title: string
     vote_average: number
-    vote_count: number
     budget: number
     runtime: number
     revenue: number

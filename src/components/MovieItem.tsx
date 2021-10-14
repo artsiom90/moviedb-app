@@ -21,7 +21,7 @@ const MovieItem: FC<MovieItemProps> = ({ movie }) => {
             />}
         >
             <Meta title={movie.title} />
-            <Meta description={`Popularity: ${movie.popularity}`} />
+            <Meta description={`Release date: ${movie.release_date}`} />
             <Row justify='center' style={{ paddingTop: 15 }}>
                 <Button onClick={() => history.push(`/movie/${movie.id}`)}>More info</Button>
             </Row>
