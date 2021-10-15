@@ -4,14 +4,15 @@ import { FC } from "react"
 
 interface DropdownMenuProps {
     menuButton: string,
-    onClick: () => void,
+    onPopular: () => void,
+    onTopRated: () => void,
 }
 
-const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onClick }) => {
+const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onPopular, onTopRated }) => {
     const menu = (
         <Menu>
-            <Menu.Item onClick={onClick}>Popular</Menu.Item>
-            <Menu.Item>Top rated</Menu.Item>
+            <Menu.Item onClick={onPopular}>Popular</Menu.Item>
+            <Menu.Item onClick={onTopRated}>Top rated</Menu.Item>
             <Menu.Item>Upcoming</Menu.Item>
         </Menu>
     )

@@ -2,7 +2,7 @@ import { Card, Layout, Row } from "antd"
 import { FC } from "react"
 import LoginForm from "../components/LoginForm"
 
-const Login: FC = () => {
+const LoginPage: FC = () => {
     return (
         <Layout>
             <Row
@@ -18,4 +18,4 @@ const Login: FC = () => {
     )
 }
 
-export default Login
+export default LoginPage

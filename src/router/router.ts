@@ -1,6 +1,6 @@
 import { ComponentType } from "react"
 import MovieInfo from "../components/MovieInfo"
-import Login from "../pages/Login"
+import Login from "../pages/LoginPage"
 import MainPage from "../pages/MainPage"
 
 export interface Route {
@@ -10,6 +10,7 @@ export interface Route {
 }
 export enum RouteNames {
     MAIN_PAGE = '/',
+    TOP_RATED = '/top-rated',
     LOGIN_PAGE = '/login',
     MOVIE_PAGE = '/movie/:id',
 }

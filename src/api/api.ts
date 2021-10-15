@@ -6,14 +6,17 @@ export const IMG_POSTER_URL: string = 'http://image.tmdb.org/t/p/w500'
 export const IMG_BACKDROP_URL: string = 'http://image.tmdb.org/t/p/w780'
 
 export class MovieDBApiService {
-    static async fetchMovies(page: number, search: string) {
-        if (!search) {
-            const response = await axios.get(`${API_URL}movie/popular?api_key=${API_KEY}&page=${page}`)
-            return response
-        } else {
-            const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
-            return response
-        }
+    static async fetchPopularMovies(page: number) {
+        const response = await axios.get(`${API_URL}movie/popular?api_key=${API_KEY}&page=${page}`)
+        return response
+    }
+    static async fetchTopRatedMovies(page: number) {
+        const response = await axios.get(`${API_URL}movie/top_rated?api_key=${API_KEY}&page=${page}`)
+        return response
+    }
+    static async searchMovies(page: number, search: string) {
+        const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
+        return response
     }
     static async fetchMovie(id: string) {
         const response = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`)

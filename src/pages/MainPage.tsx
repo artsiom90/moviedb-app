@@ -9,10 +9,21 @@ import SearchInput from "../components/SearchInput"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
 
+interface headerInfoType {
+    title: string,
+    menu: string,
+}
+
 const MainPage: FC = () => {
+    const [headerInfo, setHeaderInfo] = useState<headerInfoType>({
+        title: '',
+        menu: '',
+    })
+    const [topRated, setTopRated] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const { results, total_pages } = useTypedSelector(state => state.movies.movies)
-    console.log(results)
+    console.log(results);
+
     const { search } = useTypedSelector(state => state.movies)
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
@@ -23,12 +34,38 @@ const MainPage: FC = () => {
     }, [search])
 
     const changePageHandler = (pageNumber: number) => {
-        dispatch(MoviesActionCreators.getMovies(pageNumber, search))
-        setCurrentPage(pageNumber)
+        if (topRated) {
+            dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))
+            setCurrentPage(pageNumber)
+        } else if (!search) {
+            dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
+            setCurrentPage(pageNumber)
+        } else {
+            dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))
+            setCurrentPage(pageNumber)
+        }
     }
 
     const getPopular = () => {
-        dispatch(MoviesActionCreators.getMovies(currentPage, search))
+        setHeaderInfo({ ...headerInfo, title: 'Popular films' })
+        setHeaderInfo({ ...headerInfo, menu: 'Popular' })
+        if (!search) {
+            dispatch(MoviesActionCreators.getPopularMovies(1))
+            setCurrentPage(1)
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+        setCurrentPage(1)
+    }
+
+    const getTopRated = () => {
+        setHeaderInfo({ ...headerInfo, title: 'Top rated films' })
+        setHeaderInfo({ ...headerInfo, menu: 'Top rated' })
+        setTopRated(true)
+        if (!search) {
+            dispatch(MoviesActionCreators.getTopRatedMovies(1))
+            setCurrentPage(1)
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
         setCurrentPage(1)
     }
 
@@ -52,8 +89,9 @@ const MainPage: FC = () => {
                                     {!search
                                         ? <div style={{ marginTop: 23 }}>
                                             <DropdownMenu
-                                                onClick={getPopular}
-                                                menuButton='Popular'
+                                                onPopular={getPopular}
+                                                onTopRated={getTopRated}
+                                                menuButton={headerInfo.menu}
                                             />
                                         </div>
                                         : null}
@@ -61,7 +99,7 @@ const MainPage: FC = () => {
                                 <Col span={18}>
                                     <PageHeader
                                         className="site-page-header"
-                                        title={!search ? 'Popular films' : 'Search result'}
+                                        title={!search ? headerInfo.title : 'Search result'}
                                     />
                                 </Col>
                             </Row>
