@@ -14,12 +14,16 @@ export class MovieDBApiService {
         const response = await axios.get(`${API_URL}movie/top_rated?api_key=${API_KEY}&page=${page}`)
         return response
     }
-    static async searchMovies(page: number, search: string) {
-        const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
+    static async fetchUpcomingMovies(page: number) {
+        const response = await axios.get(`${API_URL}movie/upcoming?api_key=${API_KEY}&page=${page}`)
         return response
     }
     static async fetchMovie(id: string) {
         const response = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`)
+        return response
+    }
+    static async searchMovies(page: number, search: string) {
+        const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
         return response
     }
 }

@@ -19,10 +19,11 @@ const MainPage: FC = () => {
         title: '',
         menu: '',
     })
-    const [topRated, setTopRated] = useState(false)
+    const [topRated, setTopRated] = useState<boolean>(false)
+    const [upcoming, setUpcoming] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const { results, total_pages } = useTypedSelector(state => state.movies.movies)
-    console.log(results);
+    console.log(results)
 
     const { search } = useTypedSelector(state => state.movies)
     const { isLoading } = useTypedSelector(state => state.loading)
@@ -37,6 +38,9 @@ const MainPage: FC = () => {
         if (topRated) {
             dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))
             setCurrentPage(pageNumber)
+        } else if (upcoming) {
+            dispatch(MoviesActionCreators.getUpcomingMovies(pageNumber))
+            setCurrentPage(pageNumber)
         } else if (!search) {
             dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
             setCurrentPage(pageNumber)
@@ -47,8 +51,9 @@ const MainPage: FC = () => {
     }
 
     const getPopular = () => {
-        setHeaderInfo({ ...headerInfo, title: 'Popular films' })
-        setHeaderInfo({ ...headerInfo, menu: 'Popular' })
+        setHeaderInfo({ ...headerInfo, title: 'Popular films', menu: 'Popular' })
+        setUpcoming(false)
+        setTopRated(false)
         if (!search) {
             dispatch(MoviesActionCreators.getPopularMovies(1))
             setCurrentPage(1)
@@ -58,11 +63,23 @@ const MainPage: FC = () => {
     }
 
     const getTopRated = () => {
-        setHeaderInfo({ ...headerInfo, title: 'Top rated films' })
-        setHeaderInfo({ ...headerInfo, menu: 'Top rated' })
+        setHeaderInfo({ ...headerInfo, title: 'Top rated films', menu: 'Top rated' })
         setTopRated(true)
+        setUpcoming(false)
         if (!search) {
             dispatch(MoviesActionCreators.getTopRatedMovies(1))
+            setCurrentPage(1)
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+        setCurrentPage(1)
+    }
+
+    const getUpcoming = () => {
+        setHeaderInfo({ ...headerInfo, title: 'Upcoming films', menu: 'Upcoming' })
+        setUpcoming(true)
+        setTopRated(false)
+        if (!search) {
+            dispatch(MoviesActionCreators.getUpcomingMovies(1))
             setCurrentPage(1)
         }
         dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
@@ -75,7 +92,10 @@ const MainPage: FC = () => {
                 <SearchInput />
             </Row>
             {!results
-                ? <Row justify='center' style={{ paddingTop: '10px' }}>
+                ? <Row
+                    justify='center'
+                    style={{ paddingTop: '10px' }}
+                >
                     <Loading />
                 </Row>
                 : <>
@@ -91,24 +111,36 @@ const MainPage: FC = () => {
                                             <DropdownMenu
                                                 onPopular={getPopular}
                                                 onTopRated={getTopRated}
+                                                onUpcoming={getUpcoming}
                                                 menuButton={headerInfo.menu}
                                             />
                                         </div>
                                         : null}
                                 </Col>
                                 <Col span={18}>
-                                    <PageHeader
-                                        className="site-page-header"
-                                        title={!search ? headerInfo.title : 'Search result'}
-                                    />
+                                    <div className="site-page-header">
+                                        {!search
+                                            ? <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
+                                                <h1>{headerInfo.title}</h1>
+                                            </div>
+                                            : <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
+                                                <h1>'Search result'</h1>
+                                            </div>}
+                                    </div>
                                 </Col>
                             </Row>
                             <Row justify='space-between'>
                                 {results.map(movie => {
-                                    return <MovieItem key={movie.id} movie={movie} />
+                                    return <MovieItem
+                                        key={movie.id}
+                                        movie={movie}
+                                    />
                                 })}
                             </Row>
-                            <Row justify='center' style={{ marginBottom: 20 }}>
+                            <Row
+                                justify='center'
+                                style={{ marginBottom: 20 }}
+                            >
                                 <Paginator
                                     defaultCurrent={currentPage}
                                     onChange={changePageHandler}
