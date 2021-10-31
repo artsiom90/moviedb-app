@@ -10,7 +10,7 @@ const Navbar: FC = () => {
 
 
     return (
-        <Layout.Header>
+        <Layout.Header style={{ position: 'sticky', top: '0px', zIndex: 1 }}>
             <Row justify='end'>
                 {isAuth
                     ? <Menu

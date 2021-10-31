@@ -1,4 +1,4 @@
-import { Col, Layout, PageHeader, Row } from "antd"
+import { Col, Layout, Row } from "antd"
 import { FC, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import DropdownMenu from "../components/DropdownMenu"
@@ -91,63 +91,56 @@ const MainPage: FC = () => {
             <Row justify='center'>
                 <SearchInput />
             </Row>
-            {!results
-                ? <Row
-                    justify='center'
-                    style={{ paddingTop: '10px' }}
-                >
+            {!results || isLoading
+                ? <Row justify='center'>
                     <Loading />
                 </Row>
                 : <>
-                    {isLoading
-                        ? <Row justify='center'>
-                            <Loading />
-                        </Row>
-                        : <>
-                            <Row justify='space-around'>
-                                <Col span={4}>
-                                    {!search
-                                        ? <div style={{ marginTop: 23 }}>
-                                            <DropdownMenu
-                                                onPopular={getPopular}
-                                                onTopRated={getTopRated}
-                                                onUpcoming={getUpcoming}
-                                                menuButton={headerInfo.menu}
-                                            />
-                                        </div>
-                                        : null}
-                                </Col>
-                                <Col span={18}>
-                                    <div className="site-page-header">
-                                        {!search
-                                            ? <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
-                                                <h1>{headerInfo.title}</h1>
-                                            </div>
-                                            : <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
-                                                <h1>'Search result'</h1>
-                                            </div>}
-                                    </div>
-                                </Col>
-                            </Row>
-                            <Row justify='space-between'>
-                                {results.map(movie => {
-                                    return <MovieItem
-                                        key={movie.id}
-                                        movie={movie}
+                    <Row justify='space-around'>
+                        <Col span={4}>
+                            {!search
+                                ? <div style={{ marginTop: 23 }}>
+                                    <DropdownMenu
+                                        onPopular={getPopular}
+                                        onTopRated={getTopRated}
+                                        onUpcoming={getUpcoming}
+                                        menuButton={headerInfo.menu}
                                     />
-                                })}
-                            </Row>
-                            <Row
-                                justify='center'
-                                style={{ marginBottom: 20 }}
-                            >
-                                <Paginator
-                                    defaultCurrent={currentPage}
-                                    onChange={changePageHandler}
-                                    total={total_pages}
+                                </div>
+                                : null}
+                        </Col>
+                        <Col span={18}>
+                            <div className="site-page-header">
+                                {!search
+                                    ? <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
+                                        <h1>{headerInfo.title}</h1>
+                                    </div>
+                                    : <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
+                                        <h1>'Search result'</h1>
+                                    </div>}
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row justify='space-between'>
+                        {results.map(movie => {
+                            return (
+                                <MovieItem
+                                    key={movie.id}
+                                    movie={movie}
                                 />
-                            </Row>
-                        </>}
+                            )
+                        })}
+                    </Row>
+                    <Row
+                        justify='center'
+                        style={{ marginBottom: 20 }}
+                    >
+                        <Paginator
+                            defaultCurrent={currentPage}
+                            onChange={changePageHandler}
+                            total={total_pages}
+                        />
+                    </Row>
                 </>}
         </Layout>
     )
