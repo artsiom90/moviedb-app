@@ -1,35 +1,29 @@
-import { Col, Layout, Row } from "antd"
+import { Layout, Row } from "antd"
 import { FC, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import DropdownMenu from "../components/DropdownMenu"
 import Loading from "../components/Loading"
 import MovieItem from "../components/MovieItem"
 import Paginator from "../components/Paginator"
 import SearchInput from "../components/SearchInput"
 import { useTypedSelector } from "../hooks/useTypedSelector"
+import { DropdownMenuItemActionCreators } from "../redux/reducers/dropDownMenuItem/actionCreators"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
 
-interface headerInfoType {
-    title: string,
-    menu: string,
-}
-
 const MainPage: FC = () => {
-    const [headerInfo, setHeaderInfo] = useState<headerInfoType>({
-        title: '',
-        menu: '',
-    })
     const [topRated, setTopRated] = useState<boolean>(false)
     const [upcoming, setUpcoming] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const { results, total_pages } = useTypedSelector(state => state.movies.movies)
+    const { results, total_results } = useTypedSelector(state => state.movies.movies)
 
     const { search } = useTypedSelector(state => state.movies)
+    const { title } = useTypedSelector(state => state.dropdown)
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
 
     useEffect(() => {
         getPopular()
+        dispatch(DropdownMenuItemActionCreators.setDropdownTitle('Popular films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMenu('Films'))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search])
 
@@ -49,8 +43,18 @@ const MainPage: FC = () => {
         }
     }
 
+    useEffect(() => {
+        if (title === 'Popular films') {
+            getPopular()
+        } else if (title === 'Top rated films') {
+            getTopRated()
+        } else if (title === 'Upcoming films') {
+            getUpcoming()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [title])
+
     const getPopular = () => {
-        setHeaderInfo({ ...headerInfo, title: 'Popular films', menu: 'Popular' })
         setUpcoming(false)
         setTopRated(false)
         if (!search) {
@@ -62,7 +66,6 @@ const MainPage: FC = () => {
     }
 
     const getTopRated = () => {
-        setHeaderInfo({ ...headerInfo, title: 'Top rated films', menu: 'Top rated' })
         setTopRated(true)
         setUpcoming(false)
         if (!search) {
@@ -74,7 +77,6 @@ const MainPage: FC = () => {
     }
 
     const getUpcoming = () => {
-        setHeaderInfo({ ...headerInfo, title: 'Upcoming films', menu: 'Upcoming' })
         setUpcoming(true)
         setTopRated(false)
         if (!search) {
@@ -87,7 +89,10 @@ const MainPage: FC = () => {
 
     return (
         <Layout>
-            <Row justify='center'>
+            <Row
+                style={{ marginTop: 15 }}
+                justify='center'
+            >
                 <SearchInput />
             </Row>
             {!results || isLoading
@@ -95,30 +100,16 @@ const MainPage: FC = () => {
                     <Loading />
                 </Row>
                 : <>
-                    <Row justify='space-around'>
-                        <Col span={4}>
+                    <Row justify='center'>
+                        <div className="site-page-header">
                             {!search
-                                ? <div style={{ marginTop: 23 }}>
-                                    <DropdownMenu
-                                        onPopular={getPopular}
-                                        onTopRated={getTopRated}
-                                        onUpcoming={getUpcoming}
-                                        menuButton={headerInfo.menu}
-                                    />
+                                ? <div style={{ fontSize: 35, marginTop: 15 }}>
+                                    <h1>{title}</h1>
                                 </div>
-                                : null}
-                        </Col>
-                        <Col span={18}>
-                            <div className="site-page-header">
-                                {!search
-                                    ? <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
-                                        <h1>{headerInfo.title}</h1>
-                                    </div>
-                                    : <div style={{ fontSize: 35, paddingLeft: 243, marginTop: 20 }}>
-                                        <h1>'Search result'</h1>
-                                    </div>}
-                            </div>
-                        </Col>
+                                : <div style={{ fontSize: 35, marginTop: 15 }}>
+                                    <h1>'Search result'</h1>
+                                </div>}
+                        </div>
                     </Row>
                     <Row justify='space-between'>
                         {results.map(movie => {
@@ -137,7 +128,7 @@ const MainPage: FC = () => {
                         <Paginator
                             defaultCurrent={currentPage}
                             onChange={changePageHandler}
-                            total={total_pages}
+                            total={total_results}
                         />
                     </Row>
                 </>}

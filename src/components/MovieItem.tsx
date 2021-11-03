@@ -14,16 +14,14 @@ const MovieItem: FC<MovieItemProps> = ({ movie }) => {
 
     return (
         <Card
-            style={{ width: 240, margin: '10px' }}
+            style={{ width: 240, margin: '10px', textAlign: 'center' }}
             cover={<img
                 alt="img"
                 src={`${IMG_BASE_URL}w500${movie.poster_path}`}
             />}
         >
-            <Row justify='center'>
-                <Meta title={movie.title} />
-                <Meta description={`Release date: ${movie.release_date}`} />
-            </Row>
+            <Meta title={movie.title} />
+            <Meta description={`Release date: ${movie.release_date}`} />
             <Row justify='center' style={{ paddingTop: 15 }}>
                 <Button onClick={() => history.push(`/movie/${movie.id}`)}>More info</Button>
             </Row>

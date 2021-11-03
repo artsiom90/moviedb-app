@@ -9,6 +9,8 @@ interface PaginatorProps {
 
 const Paginator: FC<PaginatorProps> = ({ defaultCurrent, onChange, total }) => {
     return <Pagination
+        showSizeChanger={false}
+        defaultPageSize={20}
         defaultCurrent={defaultCurrent}
         onChange={onChange}
         total={total}
