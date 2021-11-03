@@ -2,8 +2,8 @@ import axios from "axios"
 
 export const API_URL: string = 'https://api.themoviedb.org/3/'
 export const API_KEY: string | undefined = 'd2b478aa3c60bdcc5ab5272c8aeef917'
-export const IMG_POSTER_URL: string = 'http://image.tmdb.org/t/p/w500'
-export const IMG_BACKDROP_URL: string = 'http://image.tmdb.org/t/p/w780'
+export const IMG_BASE_URL: string = 'http://image.tmdb.org/t/p/'
+
 
 export class MovieDBApiService {
     static async fetchPopularMovies(page: number) {

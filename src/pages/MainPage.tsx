@@ -23,7 +23,6 @@ const MainPage: FC = () => {
     const [upcoming, setUpcoming] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const { results, total_pages } = useTypedSelector(state => state.movies.movies)
-    console.log(results)
 
     const { search } = useTypedSelector(state => state.movies)
     const { isLoading } = useTypedSelector(state => state.loading)
