@@ -5,6 +5,9 @@ const initialState = {
     movieInfo: {} as Movie,
     credits: {} as Credits,
     search: '',
+    topRated: false,
+    upcoming: false,
+    currentPage: 1,
 }
 
 export const moviesReducer = (state = initialState, action: MoviesActionType): MoviesState => {
@@ -17,6 +20,12 @@ export const moviesReducer = (state = initialState, action: MoviesActionType): M
             return { ...state, credits: action.payload }
         case MoviesActionEnum.SET_SEARCH:
             return { ...state, search: action.payload }
+        case MoviesActionEnum.SET_TOP_RATED:
+            return { ...state, topRated: action.payload }
+        case MoviesActionEnum.SET_UPCOMING:
+            return { ...state, topRated: action.payload }
+        case MoviesActionEnum.SET_CURRENT_PAGE:
+            return { ...state, currentPage: action.payload }
         default:
             return state
     }

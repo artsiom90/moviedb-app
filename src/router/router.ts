@@ -10,7 +10,6 @@ export interface Route {
 }
 export enum RouteNames {
     MAIN_PAGE = '/',
-    TOP_RATED = '/top-rated',
     LOGIN_PAGE = '/login',
     MOVIE_PAGE = '/movie/:id',
 }

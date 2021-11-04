@@ -1,10 +1,11 @@
 import { Col, Layout, Menu, Row } from "antd"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { AuthActionCreators } from "../redux/reducers/auth/actionCreators"
 import { DropdownMenuItemActionCreators } from "../redux/reducers/dropDownMenuItem/actionCreators"
+import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
 import { RouteNames } from "../router/router"
 import logo from "../source/logo.svg"
 import DropdownMenu from "./DropdownMenu"
@@ -12,9 +13,70 @@ import DropdownMenu from "./DropdownMenu"
 const Navbar: FC = () => {
     const dispatch = useDispatch()
     const { isAuth } = useTypedSelector(state => state.auth)
-    const { menu } = useTypedSelector(state => state.dropdown)
+    const { title, menu } = useTypedSelector(state => state.dropdown)
+    const { search, currentPage } = useTypedSelector(state => state.movies)
+    const history = useHistory()
+
+    useEffect(() => {
+        getPopular()
+        dispatch(DropdownMenuItemActionCreators.setDropdownTitle('Popular films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMenu('Films'))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search])
+
+    useEffect(() => {
+        switch (title) {
+            case 'Popular films':
+                getPopular()
+                break
+            case 'Top rated films':
+                getTopRated()
+                break
+            case 'Upcoming films':
+                getUpcoming()
+                break
+            default:
+                break
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [title, menu])
+
+    const getPopular = () => {
+        dispatch(MoviesActionCreators.setUpcoming(false))
+        dispatch(MoviesActionCreators.setTopRated(false))
+        if (!search) {
+            dispatch(MoviesActionCreators.getPopularMovies(1))
+            dispatch(MoviesActionCreators.setCurrentPage(1))
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+        dispatch(MoviesActionCreators.setCurrentPage(1))
+    }
+
+    const getTopRated = () => {
+        dispatch(MoviesActionCreators.setTopRated(true))
+        dispatch(MoviesActionCreators.setUpcoming(false))
+        if (!search) {
+            dispatch(MoviesActionCreators.getTopRatedMovies(1))
+            dispatch(MoviesActionCreators.setCurrentPage(1))
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+        dispatch(MoviesActionCreators.setCurrentPage(1))
+    }
+
+    const getUpcoming = () => {
+        dispatch(MoviesActionCreators.setUpcoming(true))
+        dispatch(MoviesActionCreators.setTopRated(false))
+        if (!search) {
+            dispatch(MoviesActionCreators.getUpcomingMovies(1))
+            dispatch(MoviesActionCreators.setCurrentPage(1))
+        }
+        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+        dispatch(MoviesActionCreators.setCurrentPage(1))
+    }
 
     const onSetMenu = (titleInfo: string, menuInfo: string) => {
+        history.push(RouteNames.MAIN_PAGE)
+        dispatch(MoviesActionCreators.setSearch(''))
         dispatch(DropdownMenuItemActionCreators.setDropdownTitle(titleInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownMenu(menuInfo))
     }
