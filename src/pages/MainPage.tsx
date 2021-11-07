@@ -15,7 +15,6 @@ const MainPage: FC = () => {
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
 
-
     const changePageHandler = (pageNumber: number) => {
         if (topRated) {
             dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))

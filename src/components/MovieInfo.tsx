@@ -48,7 +48,7 @@ const MovieInfo: FC = () => {
                         />
                     </Row>
                     <Row justify='space-around'>
-                        <Col style={{ marginTop: -350 }}>
+                        <Col>
                             <Card
                                 style={{ width: 240 }}
                                 cover={<img
@@ -57,13 +57,15 @@ const MovieInfo: FC = () => {
                                 />}
                             />
                         </Col>
-                        <Col offset={8} style={{ marginTop: -250 }}>
-                            <h1>Additional information:</h1>
-                            <Meta description={`Release date: ${movieInfo.release_date}`} />
-                            <Meta description={`Runtime: ${movieInfo.runtime} minutes`} />
-                            <Meta description={`Budget: ${movieInfo.budget}$`} />
-                            <Meta description={`Revenue: ${movieInfo.revenue}$`} />
-                            <Meta description={`Vote average: ${movieInfo.vote_average}`} />
+                        <Col >
+                            <h1 style={{ fontSize: 35 }}>Additional information:</h1>
+                            <div style={{ fontSize: 30 }}>
+                                <Meta description={`Release date: ${movieInfo.release_date}`} />
+                                <Meta description={`Runtime: ${movieInfo.runtime} minutes`} />
+                                <Meta description={`Budget: ${movieInfo.budget}$`} />
+                                <Meta description={`Revenue: ${movieInfo.revenue}$`} />
+                                <Meta description={`Vote average: ${movieInfo.vote_average}`} />
+                            </div>
                         </Col>
                     </Row>
                     <h1 style={{ fontSize: '35px', textAlign: 'center', marginTop: '20px' }}>Actors</h1>

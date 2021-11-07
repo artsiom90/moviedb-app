@@ -23,7 +23,7 @@ export const moviesReducer = (state = initialState, action: MoviesActionType): M
         case MoviesActionEnum.SET_TOP_RATED:
             return { ...state, topRated: action.payload }
         case MoviesActionEnum.SET_UPCOMING:
-            return { ...state, topRated: action.payload }
+            return { ...state, upcoming: action.payload }
         case MoviesActionEnum.SET_CURRENT_PAGE:
             return { ...state, currentPage: action.payload }
         default:
