@@ -8,8 +8,6 @@ export const MoviesActionCreators = {
     setMovie: (payload: Movie): SetMovieAction => ({ type: MoviesActionEnum.SET_MOVIE, payload }),
     setCredits: (payload: Credits): SetCreditsAction => ({ type: MoviesActionEnum.SET_CREDITS, payload }),
     setSearch: (payload: string): SetSearchAction => ({ type: MoviesActionEnum.SET_SEARCH, payload }),
-    setTopRated: (payload: boolean) => ({ type: MoviesActionEnum.SET_TOP_RATED, payload }),
-    setUpcoming: (payload: boolean) => ({ type: MoviesActionEnum.SET_UPCOMING, payload }),
     setCurrentPage: (payload: number) => ({ type: MoviesActionEnum.SET_CURRENT_PAGE, payload }),
     getPopularMovies: (page: number = 1) => async (dispatch: AppDispatch) => {
         try {

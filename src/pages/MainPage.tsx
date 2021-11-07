@@ -10,19 +10,19 @@ import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
 
 const MainPage: FC = () => {
     const { results, total_results } = useTypedSelector(state => state.movies.movies)
-    const { topRated, upcoming, search, currentPage } = useTypedSelector(state => state.movies)
+    const { search, currentPage } = useTypedSelector(state => state.movies)
     const { title } = useTypedSelector(state => state.dropdown)
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
 
     const changePageHandler = (pageNumber: number) => {
-        if (topRated) {
+        if (title === 'Top rated films') {
             dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
-        } else if (upcoming) {
+        } else if (title === 'Upcoming films') {
             dispatch(MoviesActionCreators.getUpcomingMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
-        } else if (!search) {
+        } else if (title === 'Popular films') {
             dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else {

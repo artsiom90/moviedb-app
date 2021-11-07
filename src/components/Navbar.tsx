@@ -18,7 +18,7 @@ const Navbar: FC = () => {
     const history = useHistory()
 
     useEffect(() => {
-        getPopular()
+        getMovies(MoviesActionCreators.getPopularMovies(1))
         dispatch(DropdownMenuItemActionCreators.setDropdownTitle('Popular films'))
         dispatch(DropdownMenuItemActionCreators.setDropdownMenu('Films'))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,13 +27,13 @@ const Navbar: FC = () => {
     useEffect(() => {
         switch (title) {
             case 'Popular films':
-                getPopular()
+                getMovies(MoviesActionCreators.getPopularMovies(1))
                 break
             case 'Top rated films':
-                getTopRated()
+                getMovies(MoviesActionCreators.getTopRatedMovies(1))
                 break
             case 'Upcoming films':
-                getUpcoming()
+                getMovies(MoviesActionCreators.getUpcomingMovies(1))
                 break
             default:
                 break
@@ -41,33 +41,9 @@ const Navbar: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [title, menu])
 
-    const getPopular = () => {
-        dispatch(MoviesActionCreators.setUpcoming(false))
-        dispatch(MoviesActionCreators.setTopRated(false))
+    const getMovies = (action: any) => {
         if (!search) {
-            dispatch(MoviesActionCreators.getPopularMovies(1))
-            dispatch(MoviesActionCreators.setCurrentPage(1))
-        }
-        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
-        dispatch(MoviesActionCreators.setCurrentPage(1))
-    }
-
-    const getTopRated = () => {
-        dispatch(MoviesActionCreators.setTopRated(true))
-        dispatch(MoviesActionCreators.setUpcoming(false))
-        if (!search) {
-            dispatch(MoviesActionCreators.getTopRatedMovies(1))
-            dispatch(MoviesActionCreators.setCurrentPage(1))
-        }
-        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
-        dispatch(MoviesActionCreators.setCurrentPage(1))
-    }
-
-    const getUpcoming = () => {
-        dispatch(MoviesActionCreators.setUpcoming(true))
-        dispatch(MoviesActionCreators.setTopRated(false))
-        if (!search) {
-            dispatch(MoviesActionCreators.getUpcomingMovies(1))
+            dispatch(action)
             dispatch(MoviesActionCreators.setCurrentPage(1))
         }
         dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
@@ -85,7 +61,7 @@ const Navbar: FC = () => {
         <Layout.Header style={{ position: 'sticky', top: '0px', zIndex: 1 }}>
             <Row justify='space-between'>
                 <Col span={4}>
-                    <Link to={RouteNames.MAIN_PAGE}>
+                    <Link to={RouteNames.MAIN_PAGE} >
                         <img src={logo} alt="img" />
                     </Link>
                 </Col>
@@ -114,7 +90,7 @@ const Navbar: FC = () => {
                         </Menu>}
                 </Col>
             </Row>
-        </Layout.Header>
+        </Layout.Header >
     )
 }
 

@@ -3,6 +3,7 @@ import Meta from "antd/lib/card/Meta"
 import { FC } from "react"
 import { IMG_BASE_URL } from "../api/api"
 import { Cast } from "../redux/reducers/movies/types"
+import noImage from "../source/noimage.png"
 
 interface CastPropsType {
     castItem: Cast
@@ -11,11 +12,16 @@ interface CastPropsType {
 const CastItem: FC<CastPropsType> = ({ castItem }) => {
     return (
         <Card
-            style={{ width: 150, margin: '15px' }}
-            cover={<img
-                alt="img"
-                src={`${IMG_BASE_URL}w500${castItem.profile_path}`}
-            />}
+            style={{ width: 200, margin: '15px' }}
+            cover={castItem.profile_path
+                ? <img
+                    alt="img"
+                    src={`${IMG_BASE_URL}w500${castItem.profile_path}`}
+                />
+                : <img
+                    alt="img"
+                    src={noImage}
+                />}
         >
             <Meta
                 title={castItem.name}

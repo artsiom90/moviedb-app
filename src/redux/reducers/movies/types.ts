@@ -39,8 +39,6 @@ export interface MoviesState {
     movieInfo: Movie
     credits: Credits
     search: string
-    topRated: boolean
-    upcoming: boolean
     currentPage: number
 }
 export enum MoviesActionEnum {
@@ -48,8 +46,6 @@ export enum MoviesActionEnum {
     SET_MOVIE = 'SET_MOVIE',
     SET_CREDITS = 'SET_CREDITS',
     SET_SEARCH = 'SET_SEARCH',
-    SET_TOP_RATED = 'SET_TOP_RATED',
-    SET_UPCOMING = 'SET_UPCOMING',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
 }
 export interface SetMoviesAction {
@@ -68,14 +64,6 @@ export interface SetSearchAction {
     type: MoviesActionEnum.SET_SEARCH
     payload: string
 }
-export interface SetTopRatedAction {
-    type: MoviesActionEnum.SET_TOP_RATED
-    payload: boolean
-}
-export interface SetUpcomingAction {
-    type: MoviesActionEnum.SET_UPCOMING
-    payload: boolean
-}
 export interface SetCurrentPageAction {
     type: MoviesActionEnum.SET_CURRENT_PAGE
     payload: number
@@ -85,6 +73,4 @@ export type MoviesActionType =
     SetMovieAction |
     SetCreditsAction |
     SetSearchAction |
-    SetTopRatedAction |
-    SetUpcomingAction |
     SetCurrentPageAction
