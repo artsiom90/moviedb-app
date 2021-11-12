@@ -7,23 +7,27 @@ import Paginator from "../components/Paginator"
 import SearchInput from "../components/SearchInput"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
+import { TVShowsActionCreators } from "../redux/reducers/TVShows/actionCreators"
 
 const MainPage: FC = () => {
     const { results, total_results } = useTypedSelector(state => state.movies.movies)
     const { search, currentPage } = useTypedSelector(state => state.movies)
-    const { title } = useTypedSelector(state => state.dropdown)
+    const { titleMovie, titleTV } = useTypedSelector(state => state.dropdown)
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
 
     const changePageHandler = (pageNumber: number) => {
-        if (title === 'Top rated films') {
+        if (titleMovie === 'Top rated films') {
             dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
-        } else if (title === 'Upcoming films') {
+        } else if (titleMovie === 'Upcoming films') {
             dispatch(MoviesActionCreators.getUpcomingMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
-        } else if (title === 'Popular films') {
+        } else if (titleMovie === 'Popular films') {
             dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
+            dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
+        } else if (titleTV === 'Popular TV shows') {
+            dispatch(TVShowsActionCreators.getPopularTVShows(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else {
             dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))
@@ -48,7 +52,7 @@ const MainPage: FC = () => {
                         <div className="site-page-header">
                             {!search
                                 ? <div style={{ fontSize: 35, marginTop: 15 }}>
-                                    <h1>{title}</h1>
+                                    <h1>{titleMovie}</h1>
                                 </div>
                                 : <div style={{ fontSize: 35, marginTop: 15 }}>
                                     <h1>Search result</h1>

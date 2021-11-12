@@ -6,6 +6,7 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { AuthActionCreators } from "../redux/reducers/auth/actionCreators"
 import { DropdownMenuItemActionCreators } from "../redux/reducers/dropDownMenuItem/actionCreators"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
+import { TVShowsActionCreators } from "../redux/reducers/TVShows/actionCreators"
 import { RouteNames } from "../router/router"
 import logo from "../source/logo.svg"
 import DropdownMenu from "./DropdownMenu"
@@ -13,19 +14,20 @@ import DropdownMenu from "./DropdownMenu"
 const Navbar: FC = () => {
     const dispatch = useDispatch()
     const { isAuth } = useTypedSelector(state => state.auth)
-    const { title, menu } = useTypedSelector(state => state.dropdown)
+    const { titleMovie, titleTV, menuMovie, menuTV } = useTypedSelector(state => state.dropdown)
     const { search, currentPage } = useTypedSelector(state => state.movies)
     const history = useHistory()
 
     useEffect(() => {
         getMovies(MoviesActionCreators.getPopularMovies(1))
-        dispatch(DropdownMenuItemActionCreators.setDropdownTitle('Popular films'))
-        dispatch(DropdownMenuItemActionCreators.setDropdownMenu('Films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieTitle('Popular films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu('TV shows'))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search])
 
     useEffect(() => {
-        switch (title) {
+        switch (titleMovie) {
             case 'Popular films':
                 getMovies(MoviesActionCreators.getPopularMovies(1))
                 break
@@ -39,7 +41,18 @@ const Navbar: FC = () => {
                 break
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [title, menu])
+    }, [titleMovie, menuMovie])
+
+    useEffect(() => {
+        switch (titleTV) {
+            case 'Popular TV shows':
+                getMovies(TVShowsActionCreators.getPopularTVShows(1))
+                break
+            default:
+                break
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [titleTV, menuTV])
 
     const getMovies = (action: any) => {
         if (!search) {
@@ -50,11 +63,18 @@ const Navbar: FC = () => {
         dispatch(MoviesActionCreators.setCurrentPage(1))
     }
 
-    const onSetMenu = (titleInfo: string, menuInfo: string) => {
+    const onSetMoviesMenu = (titleInfo: string, menuInfo: string) => {
         history.push(RouteNames.MAIN_PAGE)
         dispatch(MoviesActionCreators.setSearch(''))
-        dispatch(DropdownMenuItemActionCreators.setDropdownTitle(titleInfo))
-        dispatch(DropdownMenuItemActionCreators.setDropdownMenu(menuInfo))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieTitle(titleInfo))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu(menuInfo))
+    }
+
+    const onSetTVShowsMenu = (titleInfo: string, menuInfo: string) => {
+        history.push(RouteNames.MAIN_PAGE)
+        dispatch(MoviesActionCreators.setSearch(''))
+        dispatch(DropdownMenuItemActionCreators.setDropdownTVTitle(titleInfo))
+        dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu(menuInfo))
     }
 
     return (
@@ -67,10 +87,18 @@ const Navbar: FC = () => {
                 </Col>
                 <Col span={2}>
                     <DropdownMenu
-                        onPopular={() => onSetMenu('Popular films', 'Popular')}
-                        onTopRated={() => onSetMenu('Top rated films', 'Top rated')}
-                        onUpcoming={() => onSetMenu('Upcoming films', 'Upcoming')}
-                        menuButton={menu}
+                        onPopular={() => onSetMoviesMenu('Popular films', 'Popular')}
+                        onTopRated={() => onSetMoviesMenu('Top rated films', 'Top rated')}
+                        onUpcoming={() => onSetMoviesMenu('Upcoming films', 'Upcoming')}
+                        menuButton={menuMovie}
+                    />
+                </Col>
+                <Col span={2}>
+                    <DropdownMenu
+                        onPopular={() => onSetTVShowsMenu('Popular TV shows', 'Popular')}
+                        onTopRated={() => onSetTVShowsMenu('Top rated TV shows', 'Top rated')}
+                        onUpcoming={() => onSetTVShowsMenu('Latest TV shows', 'Upcoming')}
+                        menuButton={menuTV}
                     />
                 </Col>
                 <Col span={2} offset={12}>

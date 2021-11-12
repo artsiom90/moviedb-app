@@ -25,7 +25,7 @@ const MovieInfo: FC = () => {
     useEffect(() => {
         dispatch(MoviesActionCreators.getMovie(params.id))
         dispatch(MoviesActionCreators.getCredits(params.id))
-        dispatch(DropdownMenuItemActionCreators.setDropdownMenu('Films'))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

@@ -4,7 +4,6 @@ export const API_URL: string = 'https://api.themoviedb.org/3/'
 export const API_KEY: string | undefined = 'd2b478aa3c60bdcc5ab5272c8aeef917'
 export const IMG_BASE_URL: string = 'http://image.tmdb.org/t/p/'
 
-
 export class MovieDBApiService {
     static async fetchPopularMovies(page: number) {
         const response = await axios.get(`${API_URL}movie/popular?api_key=${API_KEY}&page=${page}`)
@@ -16,6 +15,10 @@ export class MovieDBApiService {
     }
     static async fetchUpcomingMovies(page: number) {
         const response = await axios.get(`${API_URL}movie/upcoming?api_key=${API_KEY}&page=${page}`)
+        return response
+    }
+    static async fetchPopularTVShows(page: number) {
+        const response = await axios.get(`${API_URL}tv/popular?api_key=${API_KEY}&page=${page}`)
         return response
     }
     static async fetchMovie(id: string) {
