@@ -4,24 +4,30 @@ import { FC } from "react"
 
 interface DropdownMenuProps {
     menuButton: string,
+    menuItem1: string,
+    menuItem2: string,
+    menuItem3: string,
     onPopular: () => void,
     onTopRated: () => void,
     onUpcoming: () => void,
 }
 
-const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onPopular, onTopRated, onUpcoming }) => {
+const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onPopular, onTopRated, onUpcoming, menuItem1, menuItem2, menuItem3 }) => {
     const menu = (
         <Menu>
-            <Menu.Item onClick={onPopular}>Popular</Menu.Item>
-            <Menu.Item onClick={onTopRated}>Top rated</Menu.Item>
-            <Menu.Item onClick={onUpcoming}>Upcoming</Menu.Item>
+            <Menu.Item onClick={onPopular}>{menuItem1}</Menu.Item>
+            <Menu.Item onClick={onTopRated}>{menuItem2}</Menu.Item>
+            <Menu.Item onClick={onUpcoming}>{menuItem3}</Menu.Item>
         </Menu>
     )
 
     return (
         <Space direction="vertical">
             <Space wrap>
-                <Dropdown overlay={menu} placement="bottomCenter">
+                <Dropdown
+                    overlay={menu}
+                    placement="bottomCenter"
+                >
                     <Button>{menuButton}<DownOutlined /></Button>
                 </Dropdown>
             </Space>

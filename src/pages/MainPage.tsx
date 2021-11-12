@@ -7,7 +7,6 @@ import Paginator from "../components/Paginator"
 import SearchInput from "../components/SearchInput"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
-import { TVShowsActionCreators } from "../redux/reducers/TVShows/actionCreators"
 
 const MainPage: FC = () => {
     const { results, total_results } = useTypedSelector(state => state.movies.movies)
@@ -27,7 +26,7 @@ const MainPage: FC = () => {
             dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else if (titleTV === 'Popular TV shows') {
-            dispatch(TVShowsActionCreators.getPopularTVShows(pageNumber))
+            dispatch(MoviesActionCreators.getPopularTVShows(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else {
             dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))

@@ -1,11 +1,12 @@
 import { MovieDBApiService } from '../../../api/api'
 import { LoadingActionCreators } from '../loading/actionCreators'
 import { AppDispatch } from './../../store/types'
-import { Credits, Movie, MoviesActionEnum, MoviesData, SetCreditsAction, SetMovieAction, SetMoviesAction, SetSearchAction } from './types'
+import { Credits, Movie, MoviesActionEnum, MoviesData, SetCreditsAction, SetMovieAction, SetMoviesAction, SetSearchAction, SetTVShowsAction, TVShowData } from './types'
 
 export const MoviesActionCreators = {
     setMovies: (payload: MoviesData): SetMoviesAction => ({ type: MoviesActionEnum.SET_MOVIES, payload }),
     setMovie: (payload: Movie): SetMovieAction => ({ type: MoviesActionEnum.SET_MOVIE, payload }),
+    setTVShows: (payload: TVShowData): SetTVShowsAction => ({ type: MoviesActionEnum.SET_TV_SHOWS, payload }),
     setCredits: (payload: Credits): SetCreditsAction => ({ type: MoviesActionEnum.SET_CREDITS, payload }),
     setSearch: (payload: string): SetSearchAction => ({ type: MoviesActionEnum.SET_SEARCH, payload }),
     setCurrentPage: (payload: number) => ({ type: MoviesActionEnum.SET_CURRENT_PAGE, payload }),
@@ -47,6 +48,17 @@ export const MoviesActionCreators = {
             dispatch(LoadingActionCreators.setIsLoading(true))
             const response = await MovieDBApiService.fetchMovie(id)
             dispatch(MoviesActionCreators.setMovie(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
+    getPopularTVShows: (page: number = 1) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchPopularTVShows(page)
+            dispatch(MoviesActionCreators.setTVShows(response.data))
             dispatch(LoadingActionCreators.setIsLoading(false))
         } catch (error) {
             dispatch(LoadingActionCreators.setIsLoading(false))

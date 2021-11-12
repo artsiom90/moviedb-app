@@ -6,7 +6,6 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { AuthActionCreators } from "../redux/reducers/auth/actionCreators"
 import { DropdownMenuItemActionCreators } from "../redux/reducers/dropDownMenuItem/actionCreators"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
-import { TVShowsActionCreators } from "../redux/reducers/TVShows/actionCreators"
 import { RouteNames } from "../router/router"
 import logo from "../source/logo.svg"
 import DropdownMenu from "./DropdownMenu"
@@ -46,7 +45,7 @@ const Navbar: FC = () => {
     useEffect(() => {
         switch (titleTV) {
             case 'Popular TV shows':
-                getMovies(TVShowsActionCreators.getPopularTVShows(1))
+                getMovies(MoviesActionCreators.getPopularTVShows(1))
                 break
             default:
                 break
@@ -85,19 +84,25 @@ const Navbar: FC = () => {
                         <img src={logo} alt="img" />
                     </Link>
                 </Col>
-                <Col span={2}>
+                <Col>
                     <DropdownMenu
                         onPopular={() => onSetMoviesMenu('Popular films', 'Popular')}
                         onTopRated={() => onSetMoviesMenu('Top rated films', 'Top rated')}
                         onUpcoming={() => onSetMoviesMenu('Upcoming films', 'Upcoming')}
+                        menuItem1={'Popular'}
+                        menuItem2={'Top rated'}
+                        menuItem3={'Upcoming'}
                         menuButton={menuMovie}
                     />
                 </Col>
-                <Col span={2}>
+                <Col >
                     <DropdownMenu
                         onPopular={() => onSetTVShowsMenu('Popular TV shows', 'Popular')}
                         onTopRated={() => onSetTVShowsMenu('Top rated TV shows', 'Top rated')}
-                        onUpcoming={() => onSetTVShowsMenu('Latest TV shows', 'Upcoming')}
+                        onUpcoming={() => onSetTVShowsMenu('Latest TV shows', 'Latest')}
+                        menuItem1={'Popular'}
+                        menuItem2={'Top rated'}
+                        menuItem3={'Latest'}
                         menuButton={menuTV}
                     />
                 </Col>
