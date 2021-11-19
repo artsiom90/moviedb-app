@@ -25,8 +25,16 @@ export class MovieDBApiService {
         const response = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`)
         return response
     }
-    static async fetchCredits(id: string) {
+    static async fetchTvShow(id: string) {
+        const response = await axios.get(`${API_URL}tv/${id}?api_key=${API_KEY}`)
+        return response
+    }
+    static async fetchMoviesCredits(id: string) {
         const response = await axios.get(`${API_URL}movie/${id}/credits?api_key=${API_KEY}`)
+        return response
+    }
+    static async fetchTVShowsCredits(id: string) {
+        const response = await axios.get(`${API_URL}tv/${id}/credits?api_key=${API_KEY}`)
         return response
     }
     static async searchMovies(page: number, search: string) {

@@ -20,7 +20,12 @@ export interface TVShow {
     backdrop_path: string
     id: number
     overview: string
+    in_production: boolean
     first_air_date: string
+    last_air_date: string
+    episode_run_time: number
+    number_of_episodes: number
+    number_of_seasons: number
     poster_path: string
     name: string
     vote_average: number

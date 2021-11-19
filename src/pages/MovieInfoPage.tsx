@@ -7,14 +7,14 @@ import { IMG_BASE_URL } from "../api/api"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { DropdownMenuItemActionCreators } from "../redux/reducers/dropDownMenuItem/actionCreators"
 import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
-import CastItem from "./CastItem"
-import Loading from "./Loading"
+import CastItem from "../components/CastItem"
+import Loading from "../components/Loading"
 
 interface ParamsType {
     id: string
 }
 
-const MovieInfo: FC = () => {
+const MovieInfoPage: FC = () => {
     const { movieInfo } = useTypedSelector(state => state.movies)
     const { credits } = useTypedSelector(state => state.movies)
     const { isLoading } = useTypedSelector(state => state.loading)
@@ -24,7 +24,7 @@ const MovieInfo: FC = () => {
 
     useEffect(() => {
         dispatch(MoviesActionCreators.getMovie(params.id))
-        dispatch(MoviesActionCreators.getCredits(params.id))
+        dispatch(MoviesActionCreators.getMoviesCredits(params.id))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -99,4 +99,4 @@ const MovieInfo: FC = () => {
     )
 }
 
-export default MovieInfo
+export default MovieInfoPage

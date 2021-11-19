@@ -1,12 +1,13 @@
 import { MovieDBApiService } from '../../../api/api'
 import { LoadingActionCreators } from '../loading/actionCreators'
 import { AppDispatch } from './../../store/types'
-import { Credits, Movie, MoviesActionEnum, MoviesData, SetCreditsAction, SetMovieAction, SetMoviesAction, SetSearchAction, SetTVShowsAction, TVShowData } from './types'
+import { Credits, Movie, MoviesActionEnum, MoviesData, SetCreditsAction, SetMovieAction, SetMoviesAction, SetSearchAction, SetTVShowAction, SetTVShowsAction, TVShow, TVShowData } from './types'
 
 export const MoviesActionCreators = {
     setMovies: (payload: MoviesData): SetMoviesAction => ({ type: MoviesActionEnum.SET_MOVIES, payload }),
     setMovie: (payload: Movie): SetMovieAction => ({ type: MoviesActionEnum.SET_MOVIE, payload }),
     setTVShows: (payload: TVShowData): SetTVShowsAction => ({ type: MoviesActionEnum.SET_TV_SHOWS, payload }),
+    setTVShow: (payload: TVShow): SetTVShowAction => ({ type: MoviesActionEnum.SET_TV_SHOW, payload }),
     setCredits: (payload: Credits): SetCreditsAction => ({ type: MoviesActionEnum.SET_CREDITS, payload }),
     setSearch: (payload: string): SetSearchAction => ({ type: MoviesActionEnum.SET_SEARCH, payload }),
     setCurrentPage: (payload: number) => ({ type: MoviesActionEnum.SET_CURRENT_PAGE, payload }),
@@ -65,10 +66,32 @@ export const MoviesActionCreators = {
             console.log(error)
         }
     },
-    getCredits: (id: string) => async (dispatch: AppDispatch) => {
+    getTvShow: (id: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(LoadingActionCreators.setIsLoading(true))
-            const response = await MovieDBApiService.fetchCredits(id)
+            const response = await MovieDBApiService.fetchTvShow(id)
+            dispatch(MoviesActionCreators.setTVShow(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
+    getMoviesCredits: (id: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchMoviesCredits(id)
+            dispatch(MoviesActionCreators.setCredits(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
+    getTvShowCredits: (id: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchTVShowsCredits(id)
             dispatch(MoviesActionCreators.setCredits(response.data))
             dispatch(LoadingActionCreators.setIsLoading(false))
         } catch (error) {

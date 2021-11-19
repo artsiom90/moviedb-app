@@ -22,6 +22,7 @@ const Navbar: FC = () => {
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieTitle('Popular films'))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu('TV shows'))
+        history.push(RouteNames.MAIN_PAGE)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search])
 
@@ -67,13 +68,15 @@ const Navbar: FC = () => {
         dispatch(MoviesActionCreators.setSearch(''))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieTitle(titleInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu(menuInfo))
+        dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu('TV shows'))
     }
 
     const onSetTVShowsMenu = (titleInfo: string, menuInfo: string) => {
-        history.push(RouteNames.MAIN_PAGE)
+        history.push(RouteNames.TV_SHOWS_PAGE)
         dispatch(MoviesActionCreators.setSearch(''))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVTitle(titleInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu(menuInfo))
+        dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
     }
 
     return (
