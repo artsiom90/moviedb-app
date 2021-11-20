@@ -48,6 +48,12 @@ const Navbar: FC = () => {
             case 'Popular TV shows':
                 getMovies(MoviesActionCreators.getPopularTVShows(1))
                 break
+            case 'Top rated TV shows':
+                getMovies(MoviesActionCreators.getTopRatedTVShows(1))
+                break
+            case 'On the air TV shows':
+                getMovies(MoviesActionCreators.getLatestTVShows(1))
+                break
             default:
                 break
         }
@@ -102,10 +108,10 @@ const Navbar: FC = () => {
                     <DropdownMenu
                         onPopular={() => onSetTVShowsMenu('Popular TV shows', 'Popular')}
                         onTopRated={() => onSetTVShowsMenu('Top rated TV shows', 'Top rated')}
-                        onUpcoming={() => onSetTVShowsMenu('Latest TV shows', 'Latest')}
+                        onUpcoming={() => onSetTVShowsMenu('On the air TV shows', 'On the air')}
                         menuItem1={'Popular'}
                         menuItem2={'Top rated'}
-                        menuItem3={'Latest'}
+                        menuItem3={'On the air'}
                         menuButton={menuTV}
                     />
                 </Col>

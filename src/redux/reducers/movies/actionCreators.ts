@@ -66,6 +66,28 @@ export const MoviesActionCreators = {
             console.log(error)
         }
     },
+    getTopRatedTVShows: (page: number = 1) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchTopRatedTVShows(page)
+            dispatch(MoviesActionCreators.setTVShows(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
+    getLatestTVShows: (page: number = 1) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchOnTheAirTVShows(page)
+            dispatch(MoviesActionCreators.setTVShows(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
     getTvShow: (id: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(LoadingActionCreators.setIsLoading(true))
