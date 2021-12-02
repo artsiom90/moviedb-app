@@ -1,4 +1,4 @@
-import { Credits, Movie, MoviesActionEnum, MoviesActionType, MoviesData, MoviesState, TVShow, TVShowData } from './types'
+import { Credits, Movie, MoviesActionEnum, MoviesActionType, MoviesData, MoviesState, Person, TVShow, TVShowData } from './types'
 
 const initialState = {
     movies: {} as MoviesData,
@@ -6,6 +6,7 @@ const initialState = {
     tvShows: {} as TVShowData,
     tvShowsInfo: {} as TVShow,
     credits: {} as Credits,
+    person: {} as Person,
     search: '',
     currentPage: 1,
 }
@@ -22,6 +23,8 @@ export const moviesReducer = (state = initialState, action: MoviesActionType): M
             return { ...state, tvShowsInfo: action.payload }
         case MoviesActionEnum.SET_CREDITS:
             return { ...state, credits: action.payload }
+        case MoviesActionEnum.SET_PERSON:
+            return { ...state, person: action.payload }
         case MoviesActionEnum.SET_SEARCH:
             return { ...state, search: action.payload }
         case MoviesActionEnum.SET_CURRENT_PAGE:

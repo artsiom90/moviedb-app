@@ -37,22 +37,31 @@ export interface TVShowData {
     total_results: number
 }
 export interface Cast {
+    id: number
     character: string
     credit_id: string
     name: string
     profile_path: string
 }
-
 export interface Crew {
     job: string
     name: string
     credit_id: number
 }
-
 export interface Credits {
     id: number
     cast: Cast[]
     crew: Crew[]
+}
+export interface Person {
+    id: number
+    name: string
+    birthday: string | null
+    deathday: string | null
+    biography: string
+    popularity: number
+    place_of_birth: string | null
+    profile_path: string | null
 }
 export interface MoviesState {
     movies: MoviesData
@@ -60,6 +69,7 @@ export interface MoviesState {
     tvShows: TVShowData
     tvShowsInfo: TVShow
     credits: Credits
+    person: Person
     search: string
     currentPage: number
 }
@@ -69,6 +79,7 @@ export enum MoviesActionEnum {
     SET_TV_SHOWS = 'SET_TV_SHOWS',
     SET_TV_SHOW = 'SET_TV_SHOW',
     SET_CREDITS = 'SET_CREDITS',
+    SET_PERSON = 'SET_PERSON',
     SET_SEARCH = 'SET_SEARCH',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
 }
@@ -92,6 +103,10 @@ export interface SetCreditsAction {
     type: MoviesActionEnum.SET_CREDITS
     payload: Credits
 }
+export interface SetPersonAction {
+    type: MoviesActionEnum.SET_PERSON
+    payload: Person
+}
 export interface SetSearchAction {
     type: MoviesActionEnum.SET_SEARCH
     payload: string
@@ -106,5 +121,6 @@ export type MoviesActionType =
     SetTVShowAction |
     SetTVShowsAction |
     SetCreditsAction |
+    SetPersonAction |
     SetSearchAction |
     SetCurrentPageAction

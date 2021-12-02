@@ -45,6 +45,10 @@ export class MovieDBApiService {
         const response = await axios.get(`${API_URL}tv/${id}/credits?api_key=${API_KEY}`)
         return response
     }
+    static async fetchPerson(id: string) {
+        const response = await axios.get(`${API_URL}person/${id}?api_key=${API_KEY}`)
+        return response
+    }
     static async searchMovies(page: number, search: string) {
         const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
         return response

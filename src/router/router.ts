@@ -4,6 +4,7 @@ import Login from "../pages/LoginPage"
 import MainPage from "../pages/MainPage"
 import TVShowsPage from "../pages/TVShowsPage"
 import TVShowInfoPage from "../pages/TVShowInfoPage"
+import PersonInfoPage from "../pages/PersonInfoPage"
 
 export interface Route {
     path: string
@@ -16,6 +17,7 @@ export enum RouteNames {
     LOGIN_PAGE = '/login',
     MOVIE_PAGE = '/movie/:id',
     TVSHOW_PAGE = '/show/:id',
+    PERSON_PAGE = '/person/:id',
 }
 
 export const publicRoutes: Route[] = [
@@ -27,4 +29,5 @@ export const privateRoutes: Route[] = [
     { path: RouteNames.TV_SHOWS_PAGE, component: TVShowsPage, exact: true },
     { path: RouteNames.MOVIE_PAGE, component: MovieInfoPage, exact: true },
     { path: RouteNames.TVSHOW_PAGE, component: TVShowInfoPage, exact: true },
+    { path: RouteNames.PERSON_PAGE, component: PersonInfoPage, exact: true },
 ]

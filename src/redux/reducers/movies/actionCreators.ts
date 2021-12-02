@@ -1,7 +1,7 @@
 import { MovieDBApiService } from '../../../api/api'
 import { LoadingActionCreators } from '../loading/actionCreators'
 import { AppDispatch } from './../../store/types'
-import { Credits, Movie, MoviesActionEnum, MoviesData, SetCreditsAction, SetMovieAction, SetMoviesAction, SetSearchAction, SetTVShowAction, SetTVShowsAction, TVShow, TVShowData } from './types'
+import { Credits, Movie, MoviesActionEnum, MoviesData, Person, SetCreditsAction, SetMovieAction, SetMoviesAction, SetPersonAction, SetSearchAction, SetTVShowAction, SetTVShowsAction, TVShow, TVShowData } from './types'
 
 export const MoviesActionCreators = {
     setMovies: (payload: MoviesData): SetMoviesAction => ({ type: MoviesActionEnum.SET_MOVIES, payload }),
@@ -9,6 +9,7 @@ export const MoviesActionCreators = {
     setTVShows: (payload: TVShowData): SetTVShowsAction => ({ type: MoviesActionEnum.SET_TV_SHOWS, payload }),
     setTVShow: (payload: TVShow): SetTVShowAction => ({ type: MoviesActionEnum.SET_TV_SHOW, payload }),
     setCredits: (payload: Credits): SetCreditsAction => ({ type: MoviesActionEnum.SET_CREDITS, payload }),
+    setPerson: (payload: Person): SetPersonAction => ({ type: MoviesActionEnum.SET_PERSON, payload }),
     setSearch: (payload: string): SetSearchAction => ({ type: MoviesActionEnum.SET_SEARCH, payload }),
     setCurrentPage: (payload: number) => ({ type: MoviesActionEnum.SET_CURRENT_PAGE, payload }),
     getPopularMovies: (page: number = 1) => async (dispatch: AppDispatch) => {
@@ -115,6 +116,17 @@ export const MoviesActionCreators = {
             dispatch(LoadingActionCreators.setIsLoading(true))
             const response = await MovieDBApiService.fetchTVShowsCredits(id)
             dispatch(MoviesActionCreators.setCredits(response.data))
+            dispatch(LoadingActionCreators.setIsLoading(false))
+        } catch (error) {
+            dispatch(LoadingActionCreators.setIsLoading(false))
+            console.log(error)
+        }
+    },
+    getPerson: (id: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(LoadingActionCreators.setIsLoading(true))
+            const response = await MovieDBApiService.fetchPerson(id)
+            dispatch(MoviesActionCreators.setPerson(response.data))
             dispatch(LoadingActionCreators.setIsLoading(false))
         } catch (error) {
             dispatch(LoadingActionCreators.setIsLoading(false))
