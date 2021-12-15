@@ -1,5 +1,5 @@
 import { Layout, Row } from "antd"
-import { FC, useEffect } from "react"
+import { FC, useCallback, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Loading from "../components/Loading"
 import MovieItem from "../components/MovieItem"
@@ -21,8 +21,11 @@ const MainPage: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const changePageHandler = (pageNumber: number) => {
-        if (titleMovie === 'Top rated films') {
+    const changePageHandler = useCallback((pageNumber: number) => {
+        if (search) {
+            dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))
+            dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
+        } else if (titleMovie === 'Top rated films') {
             dispatch(MoviesActionCreators.getTopRatedMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else if (titleMovie === 'Upcoming films') {
@@ -31,11 +34,8 @@ const MainPage: FC = () => {
         } else if (titleMovie === 'Popular films') {
             dispatch(MoviesActionCreators.getPopularMovies(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
-        } else {
-            dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))
-            dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         }
-    }
+    }, [dispatch, search, titleMovie])
 
     return (
         <Layout>

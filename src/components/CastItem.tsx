@@ -30,7 +30,7 @@ const CastItem: FC<CastPropsType> = ({ castItem }) => {
                 title={castItem.name}
                 description={castItem.character}
             />
-                        <Row justify='center' style={{ paddingTop: 15 }}>
+            <Row justify='center' style={{ paddingTop: 15 }}>
                 <Button onClick={() => history.push(`/person/${castItem.id}`)}>More info</Button>
             </Row>
         </Card>

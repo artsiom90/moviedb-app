@@ -1,5 +1,5 @@
 import { Col, Layout, Menu, Row } from "antd"
-import { FC, useEffect } from "react"
+import { FC, useCallback, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { Link, useHistory } from "react-router-dom"
 import { useTypedSelector } from "../hooks/useTypedSelector"
@@ -15,6 +15,7 @@ const Navbar: FC = () => {
     const { isAuth } = useTypedSelector(state => state.auth)
     const { titleMovie, titleTV, menuMovie, menuTV } = useTypedSelector(state => state.dropdown)
     const { search, currentPage } = useTypedSelector(state => state.movies)
+
     const history = useHistory()
 
     useEffect(() => {
@@ -60,30 +61,34 @@ const Navbar: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [titleTV, menuTV])
 
-    const getMovies = (action: any) => {
+    const getMovies = useCallback((action: any) => {
         if (!search) {
             dispatch(action)
             dispatch(MoviesActionCreators.setCurrentPage(1))
+        } else {
+            dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
+            dispatch(MoviesActionCreators.setCurrentPage(1))
         }
-        dispatch(MoviesActionCreators.getSearchedMovies(currentPage, search))
-        dispatch(MoviesActionCreators.setCurrentPage(1))
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, search])
 
-    const onSetMoviesMenu = (titleInfo: string, menuInfo: string) => {
+    const onSetMoviesMenu = useCallback((titleInfo: string, menuInfo: string) => {
         history.push(RouteNames.MAIN_PAGE)
         dispatch(MoviesActionCreators.setSearch(''))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieTitle(titleInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu(menuInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu('TV shows'))
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    const onSetTVShowsMenu = (titleInfo: string, menuInfo: string) => {
+    const onSetTVShowsMenu = useCallback((titleInfo: string, menuInfo: string) => {
         history.push(RouteNames.TV_SHOWS_PAGE)
         dispatch(MoviesActionCreators.setSearch(''))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVTitle(titleInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownTVMenu(menuInfo))
         dispatch(DropdownMenuItemActionCreators.setDropdownMovieMenu('Films'))
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Layout.Header style={{ position: 'sticky', top: '0px', zIndex: 1 }}>

@@ -1,5 +1,5 @@
 import { Pagination } from "antd"
-import { FC } from "react"
+import { FC, memo } from "react"
 
 interface PaginatorProps {
     defaultCurrent: number
@@ -7,7 +7,7 @@ interface PaginatorProps {
     total: number
 }
 
-const Paginator: FC<PaginatorProps> = ({ defaultCurrent, onChange, total }) => {
+const Paginator: FC<PaginatorProps> = memo(({ defaultCurrent, onChange, total }) => {
     return <Pagination
         showSizeChanger={false}
         defaultPageSize={20}
@@ -15,6 +15,6 @@ const Paginator: FC<PaginatorProps> = ({ defaultCurrent, onChange, total }) => {
         onChange={onChange}
         total={total}
     />
-}
+})
 
 export default Paginator

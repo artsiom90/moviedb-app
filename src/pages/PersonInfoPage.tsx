@@ -26,14 +26,13 @@ const PersonInfoPage: FC = () => {
 
   return (
     <Layout>
-      {!person || isLoading ? (
-        <Loading />
-      ) : (
+      {!person || isLoading ?
+        <Loading /> :
         <>
           <Row justify="space-around">
             <Col>
               <Card
-                style={{ width: 240 }}
+                style={{ width: 240, marginTop: 30 }}
                 cover={
                   <img
                     src={`${IMG_BASE_URL}w500${person.profile_path}`}
@@ -43,21 +42,26 @@ const PersonInfoPage: FC = () => {
               />
             </Col>
             <Col>
-              <h1 style={{ fontSize: 35 }}>Additional information:</h1>
-              <div style={{ fontSize: 30 }}>
+              <h1 style={{ fontSize: 35, marginTop: 30 }}>Additional information</h1>
+              <div style={{ fontSize: 20 }}>
                 <Meta description={`Name: ${person.name}`} />
-                <Meta
-                  description={`Place of birth: ${person.place_of_birth}`}
-                />
-                <Meta description={`Biography: ${person.biography}$`} />
+                <Meta description={`Place of birth: ${person.place_of_birth}`} />
                 <Meta description={`Birthday: ${person.birthday}$`} />
                 <Meta description={`Death day: ${person.deathday}`} />
                 <Meta description={`Popularity: ${person.popularity}`} />
               </div>
             </Col>
           </Row>
+          <Row justify="center">
+            <Col>
+              <h1 style={{ fontSize: 35, marginTop: 30, textAlign: "center" }}>Biography</h1>
+              <div style={{ fontSize: 20, margin: '0px 30px 30px 30px' }}>
+                <Meta description={person.biography} />
+              </div>
+            </Col>
+          </Row>
         </>
-      )}
+      }
     </Layout>
   )
 }

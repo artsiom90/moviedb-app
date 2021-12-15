@@ -58,8 +58,8 @@ const MovieInfoPage: FC = () => {
                             />
                         </Col>
                         <Col >
-                            <h1 style={{ fontSize: 35 }}>Additional information:</h1>
-                            <div style={{ fontSize: 30 }}>
+                            <h1 style={{ fontSize: 30 }}>Additional information</h1>
+                            <div style={{ fontSize: 25 }}>
                                 <Meta description={`Release date: ${movieInfo.release_date}`} />
                                 <Meta description={`Runtime: ${movieInfo.runtime} minutes`} />
                                 <Meta description={`Budget: ${movieInfo.budget}$`} />

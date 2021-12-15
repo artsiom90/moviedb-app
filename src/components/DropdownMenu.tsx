@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons'
 import { Menu, Dropdown, Button, Space } from 'antd'
-import { FC } from "react"
+import { FC, memo } from "react"
 
 interface DropdownMenuProps {
     menuButton: string,
@@ -12,7 +12,7 @@ interface DropdownMenuProps {
     onUpcoming: () => void,
 }
 
-const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onPopular, onTopRated, onUpcoming, menuItem1, menuItem2, menuItem3 }) => {
+const DropdownMenu: FC<DropdownMenuProps> = memo(({ menuButton, onPopular, onTopRated, onUpcoming, menuItem1, menuItem2, menuItem3 }) => {
     const menu = (
         <Menu>
             <Menu.Item onClick={onPopular}>{menuItem1}</Menu.Item>
@@ -33,6 +33,6 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ menuButton, onPopular, onTopRated
             </Space>
         </Space>
     )
-}
+})
 
 export default DropdownMenu

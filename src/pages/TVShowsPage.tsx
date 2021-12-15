@@ -1,5 +1,5 @@
 import { Layout, Row } from "antd"
-import { FC } from "react"
+import { FC, useCallback } from "react"
 import { useDispatch } from "react-redux"
 import Loading from "../components/Loading"
 import Paginator from "../components/Paginator"
@@ -10,20 +10,28 @@ import { MoviesActionCreators } from "../redux/reducers/movies/actionCreators"
 
 const TVShowsPage: FC = () => {
     const { results, total_results } = useTypedSelector(state => state.movies.tvShows)
+    console.log(results);
+
     const { search, currentPage } = useTypedSelector(state => state.movies)
     const { titleTV } = useTypedSelector(state => state.dropdown)
     const { isLoading } = useTypedSelector(state => state.loading)
     const dispatch = useDispatch()
 
-    const changePageHandler = (pageNumber: number) => {
+    const changePageHandler = useCallback((pageNumber: number) => {
         if (titleTV === 'Popular TV shows') {
             dispatch(MoviesActionCreators.getPopularTVShows(pageNumber))
+            dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
+        } else if (titleTV === 'Top rated TV shows') {
+            dispatch(MoviesActionCreators.getTopRatedTVShows(pageNumber))
+            dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
+        } else if (titleTV === 'On the air TV shows') {
+            dispatch(MoviesActionCreators.getLatestTVShows(pageNumber))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         } else {
             dispatch(MoviesActionCreators.getSearchedMovies(pageNumber, search))
             dispatch(MoviesActionCreators.setCurrentPage(pageNumber))
         }
-    }
+    }, [dispatch, search, titleTV])
 
     return (
         <Layout>
