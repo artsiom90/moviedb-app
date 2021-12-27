@@ -53,4 +53,24 @@ export class MovieDBApiService {
         const response = await axios.get(`${API_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}`)
         return response
     }
+    static async getRequestToken() {
+        const response = await axios.get(`${API_URL}authentication/token/new?api_key=${API_KEY}`)
+        return response
+    }
+    static async setGuestSession() {
+        const response = await axios.get(`${API_URL}authentication/guest_session/new?api_key=${API_KEY}`)
+        return response
+    }
+    static async setAuthentication(data: any) {
+        const response = await axios.post(`${API_URL}authentication/token/validate_with_login?api_key=${API_KEY}`, data)
+        return response
+    }
+    static async setSessionId(data: any) {
+        const response = await axios.post(`${API_URL}authentication/session/new?api_key=${API_KEY}`, data)
+        return response
+    }
+    static async deleteSession(data: any) {
+        const response = await axios.delete(`${API_URL}authentication/session?api_key=${API_KEY}`, data)
+        return response
+    }
 }

@@ -46,7 +46,7 @@ const PersonInfoPage: FC = () => {
               <div style={{ fontSize: 20 }}>
                 <Meta description={`Name: ${person.name}`} />
                 <Meta description={`Place of birth: ${person.place_of_birth}`} />
-                <Meta description={`Birthday: ${person.birthday}$`} />
+                <Meta description={`Birthday: ${person.birthday}`} />
                 <Meta description={`Death day: ${person.deathday}`} />
                 <Meta description={`Popularity: ${person.popularity}`} />
               </div>
